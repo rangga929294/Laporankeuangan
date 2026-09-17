@@ -1,0 +1,1501 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Basic security-related browser policy -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <title>PUNDIKU — Akuntansi Keuangan Keluarga</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172033;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        /* =========================
+           APP
+        ========================== */
+
+        #app {
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 245px;
+            height: 100vh;
+            background: #0f172a;
+            color: white;
+            padding: 24px 16px;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px 25px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            margin-bottom: 20px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .brand h2 {
+            font-size: 20px;
+        }
+
+        .brand small {
+            color: #94a3b8;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .nav-btn {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #cbd5e1;
+            text-align: left;
+            padding: 13px 14px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .main {
+            margin-left: 245px;
+            padding: 28px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .topbar h1 {
+            font-size: 28px;
+        }
+
+        /* =========================
+           CARDS
+        ========================== */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(15,23,42,.05);
+        }
+
+        .summary-card .label {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .summary-card .value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .income {
+            color: #059669;
+        }
+
+        .expense {
+            color: #dc2626;
+        }
+
+        .asset {
+            color: #2563eb;
+        }
+
+        .investment {
+            color: #7c3aed;
+        }
+
+        /* =========================
+           CONTENT
+        ========================== */
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 5px 20px rgba(15,23,42,.05);
+            margin-bottom: 20px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .panel-header h2 {
+            font-size: 18px;
+        }
+
+        .add-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 9px 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* =========================
+           TABLE
+        ========================== */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px 10px;
+            text-align: left;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 13px;
+        }
+
+        th {
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .badge-income {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-expense {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* =========================
+           CHART
+        ========================== */
+
+        .chart {
+            height: 230px;
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            gap: 10px;
+            padding: 20px 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .bar-group {
+            height: 100%;
+            display: flex;
+            align-items: end;
+            gap: 5px;
+        }
+
+        .bar {
+            width: 18px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .bar-income {
+            background: #10b981;
+        }
+
+        .bar-expense {
+            background: #ef4444;
+        }
+
+        .month-labels {
+            display: flex;
+            justify-content: space-around;
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 8px;
+        }
+
+        /* =========================
+           PAGE SECTIONS
+        ========================== */
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .form-panel {
+            max-width: 700px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .save-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 1000px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 18px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                gap: 10px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+      MAIN APPLICATION
+  ====================================================== -->
+
+  <section id="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                P
+            </div>
+
+            <div>
+                <h2>PUNDIKU</h2>
+                <small>Family Finance</small>
+            </div>
+
+        </div>
+
+
+        <button
+            class="nav-btn active"
+            data-page="dashboard">
+            🏠 Dashboard
+        </button>
+
+        <button
+            class="nav-btn"
+            data-page="transaksi">
+            💰 Transaksi
+        </button>
+
+        <button
+            class="nav-btn"
+            data-page="aset">
+            🏦 Aset
+        </button>
+
+        <button
+            class="nav-btn"
+            data-page="investasi">
+            📈 Investasi
+        </button>
+
+        <button
+            class="nav-btn"
+            data-page="laporan">
+            📊 Laporan
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+
+        <section
+            id="dashboard"
+            class="page-section active">
+
+            <div class="topbar">
+
+                <div>
+                    <h1 style="font-weight:bold;color:blue;">DASBORDKU</h1>
+
+                    <p style="color:#64748b;margin-top:5px;">
+                        Monitoring keuangan keluarga
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="summary-grid">
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Total Pemasukan
+                    </div>
+
+                    <div
+                        id="totalIncome"
+                        class="value income">
+                        Rp 11.000.000
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Total Pengeluaran
+                    </div>
+
+                    <div
+                        id="totalExpense"
+                        class="value expense">
+                        Rp 6.500.000
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Total Aset
+                    </div>
+
+                    <div
+                        id="totalAsset"
+                        class="value asset">
+                        Rp 150.000.000
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Total Investasi
+                    </div>
+
+                    <div
+                        id="totalInvestment"
+                        class="value investment">
+                        Rp 35.000.000
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTENT -->
+
+            <div class="content-grid">
+
+                <div>
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h2>
+                                Arus Kas
+                            </h2>
+
+                            <span
+                                style="font-size:12px;color:#64748b;">
+                                6 Bulan
+                            </span>
+
+                        </div>
+
+                        <div class="chart">
+
+                            <div class="bar-group">
+                                <div class="bar bar-income"
+                                     style="height:70%;"></div>
+                                <div class="bar bar-expense"
+                                     style="height:45%;"></div>
+                            </div>
+
+                            <div class="bar-group">
+                                <div class="bar bar-income"
+                                     style="height:80%;"></div>
+                                <div class="bar bar-expense"
+                                     style="height:50%;"></div>
+                            </div>
+
+                            <div class="bar-group">
+                                <div class="bar bar-income"
+                                     style="height:65%;"></div>
+                                <div class="bar bar-expense"
+                                     style="height:42%;"></div>
+                            </div>
+
+                            <div class="bar-group">
+                                <div class="bar bar-income"
+                                     style="height:90%;"></div>
+                                <div class="bar bar-expense"
+                                     style="height:55%;"></div>
+                            </div>
+
+                            <div class="bar-group">
+                                <div class="bar bar-income"
+                                     style="height:75%;"></div>
+                                <div class="bar bar-expense"
+                                     style="height:47%;"></div>
+                            </div>
+
+                            <div class="bar-group">
+                                <div class="bar bar-income"
+                                     style="height:85%;"></div>
+                                <div class="bar bar-expense"
+                                     style="height:52%;"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="month-labels">
+                            <span>Apr</span>
+                            <span>Mei</span>
+                            <span>Jun</span>
+                            <span>Jul</span>
+                            <span>Agu</span>
+                            <span>Sep</span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- TRANSACTIONS -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h2>
+                                Transaksi Terbaru
+                            </h2>
+
+                            <button
+                                class="add-btn"
+                                onclick="showPage('transaksi')">
+                                + Tambah
+                            </button>
+
+                        </div>
+
+                        <div class="table-container">
+
+                            <table>
+
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Keterangan</th>
+                                        <th>Kategori</th>
+                                        <th>Jenis</th>
+                                        <th>Nominal</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="transactionTable">
+
+                                    <tr>
+                                        <td>17/09/2026</td>
+                                        <td>Gaji</td>
+                                        <td>Pendapatan</td>
+                                        <td>
+                                            <span class="badge badge-income">
+                                                Pemasukan
+                                            </span>
+                                        </td>
+                                        <td class="income">
+                                            + Rp 11.000.000
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>16/09/2026</td>
+                                        <td>Belanja bulanan</td>
+                                        <td>Kebutuhan</td>
+                                        <td>
+                                            <span class="badge badge-expense">
+                                                Pengeluaran
+                                            </span>
+                                        </td>
+                                        <td class="expense">
+                                            - Rp 1.500.000
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>15/09/2026</td>
+                                        <td>Investasi reksa dana</td>
+                                        <td>Investasi</td>
+                                        <td>
+                                            <span class="badge badge-expense">
+                                                Pengeluaran
+                                            </span>
+                                        </td>
+                                        <td class="expense">
+                                            - Rp 1.000.000
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT SIDE -->
+
+                <div>
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h2>
+                                Ringkasan Keuangan
+                            </h2>
+
+                        </div>
+
+                        <p style="color:#64748b;font-size:13px;">
+                            Sisa arus kas bulan ini
+                        </p>
+
+                        <div
+                            style="font-size:30px;font-weight:bold;margin-top:10px;"
+                            class="income">
+                            Rp 4.500.000
+                        </div>
+
+                        <hr
+                            style="margin:20px 0;border:none;border-top:1px solid #edf0f4;">
+
+                        <p style="color:#64748b;font-size:13px;">
+                            Rasio pengeluaran
+                        </p>
+
+                        <div
+                            style="font-size:24px;font-weight:bold;margin-top:8px;">
+                            59,1%
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <h2>
+                                Aset Keluarga
+                            </h2>
+
+                            <button
+                                class="add-btn"
+                                onclick="showPage('aset')">
+                                Kelola
+                            </button>
+
+                        </div>
+
+                        <p>
+                            🏠 Rumah
+                            <strong style="float:right;">
+                                Rp 100 Jt
+                            </strong>
+                        </p>
+
+                        <hr style="margin:14px 0;border:none;border-top:1px solid #edf0f4;">
+
+                        <p>
+                            🚗 Kendaraan
+                            <strong style="float:right;">
+                                Rp 35 Jt
+                            </strong>
+                        </p>
+
+                        <hr style="margin:14px 0;border:none;border-top:1px solid #edf0f4;">
+
+                        <p>
+                            💵 Tabungan
+                            <strong style="float:right;">
+                                Rp 15 Jt
+                            </strong>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             TRANSAKSI
+        ========================== -->
+
+        <section
+            id="transaksi"
+            class="page-section">
+
+            <div class="topbar">
+
+                <div>
+                    <h1>Transaksi Keuangan</h1>
+                    <p style="color:#64748b;">
+                        Catat pemasukan dan pengeluaran keluarga
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="panel form-panel">
+
+                <div class="panel-header">
+                    <h2>Tambah Transaksi</h2>
+                </div>
+
+                <form id="transactionForm">
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Tanggal</label>
+
+                            <input
+                                type="date"
+                                id="transactionDate"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Jenis Transaksi</label>
+
+                            <select
+                                id="transactionType"
+                                required>
+
+                                <option value="income">
+                                    Pemasukan
+                                </option>
+
+                                <option value="expense">
+                                    Pengeluaran
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Keterangan</label>
+
+                            <input
+                                type="text"
+                                id="transactionDescription"
+                                maxlength="100"
+                                required
+                                placeholder="Contoh: Gaji">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Nominal</label>
+
+                            <input
+                                type="number"
+                                id="transactionAmount"
+                                min="1"
+                                step="1"
+                                required
+                                placeholder="0">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Kategori</label>
+
+                        <select id="transactionCategory">
+
+                            <option>Pendapatan</option>
+                            <option>Kebutuhan</option>
+                            <option>Tagihan</option>
+                            <option>Pendidikan</option>
+                            <option>Kesehatan</option>
+                            <option>Transportasi</option>
+                            <option>Investasi</option>
+                            <option>Lainnya</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        class="save-btn"
+                        type="submit">
+                        Simpan Transaksi
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ASET
+        ========================== -->
+
+        <section
+            id="aset"
+            class="page-section">
+
+            <div class="topbar">
+
+                <div>
+                    <h1>Aset Keluarga</h1>
+
+                    <p style="color:#64748b;">
+                        Monitoring seluruh aset keluarga
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>
+                        Daftar Aset
+                    </h2>
+
+                    <button class="add-btn">
+                        + Tambah Aset
+                    </button>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Nama Aset</th>
+                                <th>Kategori</th>
+                                <th>Tahun</th>
+                                <th>Nilai</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Rumah</td>
+                                <td>Properti</td>
+                                <td>2020</td>
+                                <td>Rp 100.000.000</td>
+                                <td>Dimiliki</td>
+                            </tr>
+
+                            <tr>
+                                <td>Kendaraan</td>
+                                <td>Kendaraan</td>
+                                <td>2023</td>
+                                <td>Rp 35.000.000</td>
+                                <td>Dimiliki</td>
+                            </tr>
+
+                            <tr>
+                                <td>Tabungan</td>
+                                <td>Kas</td>
+                                <td>2026</td>
+                                <td>Rp 15.000.000</td>
+                                <td>Aktif</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             INVESTASI
+        ========================== -->
+
+        <section
+            id="investasi"
+            class="page-section">
+
+            <div class="topbar">
+
+                <div>
+
+                    <h1>Investasi</h1>
+
+                    <p style="color:#64748b;">
+                        Monitoring portofolio investasi keluarga
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>
+                        Portofolio Investasi
+                    </h2>
+
+                    <button class="add-btn">
+                        + Tambah Investasi
+                    </button>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Instrumen</th>
+                                <th>Jenis</th>
+                                <th>Modal</th>
+                                <th>Nilai Saat Ini</th>
+                                <th>Keuntungan</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Reksa Dana</td>
+                                <td>Reksa Dana</td>
+                                <td>Rp 10.000.000</td>
+                                <td>Rp 11.000.000</td>
+                                <td class="income">
+                                    +10%
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Emas</td>
+                                <td>Logam Mulia</td>
+                                <td>Rp 15.000.000</td>
+                                <td>Rp 16.500.000</td>
+                                <td class="income">
+                                    +10%
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Deposito</td>
+                                <td>Deposito</td>
+                                <td>Rp 10.000.000</td>
+                                <td>Rp 10.300.000</td>
+                                <td class="income">
+                                    +3%
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LAPORAN
+        ========================== -->
+
+        <section
+            id="laporan"
+            class="page-section">
+
+            <div class="topbar">
+
+                <div>
+
+                    <h1>Laporan Keuangan</h1>
+
+                    <p style="color:#64748b;">
+                        Ringkasan kondisi keuangan keluarga
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-grid">
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Pemasukan
+                    </div>
+
+                    <div class="value income">
+                        Rp 11.000.000
+                    </div>
+
+                </div>
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Pengeluaran
+                    </div>
+
+                    <div class="value expense">
+                        Rp 6.500.000
+                    </div>
+
+                </div>
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Aset
+                    </div>
+
+                    <div class="value asset">
+                        Rp 150.000.000
+                    </div>
+
+                </div>
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Investasi
+                    </div>
+
+                    <div class="value investment">
+                        Rp 35.000.000
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h2>
+                        Cetak Laporan
+                    </h2>
+
+                </div>
+
+                <p style="color:#64748b;margin-bottom:20px;">
+                    Laporan PDF nantinya dapat dibuat melalui
+                    backend agar data yang dicetak berasal dari
+                    database yang tervalidasi.
+                </p>
+
+                <button
+                    class="save-btn"
+                    onclick="window.print()">
+                    🖨️ Cetak Laporan
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</section>
+
+
+<script>
+    "use strict";
+
+    /*
+     * =====================================================
+     * PUNDIKU FRONTEND
+     * =====================================================
+     *
+     * CATATAN KEAMANAN:
+     *
+     * Jangan menggunakan data sensitif langsung di
+     * JavaScript untuk aplikasi produksi.
+     *
+     * Produksi:
+     *
+     * Browser
+     *    ↓
+     * HTTPS
+     *    ↓
+     * Backend API
+     *    ↓
+     * Authentication
+     *    ↓
+     * PostgreSQL
+     *
+     * Password:
+     * Argon2id / bcrypt
+     *
+     * Session:
+     * Secure + HttpOnly + SameSite Cookie
+     */
+
+    const app =
+        document.getElementById("app");
+
+
+    /*
+     * NAVIGATION
+     */
+
+    const navButtons =
+        document.querySelectorAll(".nav-btn");
+
+
+    navButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const page =
+                        button.dataset.page;
+
+                    showPage(page);
+
+                }
+            );
+
+        }
+    );
+
+
+    function showPage(pageId) {
+
+        const sections =
+            document.querySelectorAll(
+                ".page-section"
+            );
+
+        sections.forEach(
+            function(section) {
+
+                section.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+        const target =
+            document.getElementById(pageId);
+
+        if (target) {
+
+            target.classList.add(
+                "active"
+            );
+
+        }
+
+
+        navButtons.forEach(
+            function(button) {
+
+                button.classList.remove(
+                    "active"
+                );
+
+                if (
+                    button.dataset.page ===
+                    pageId
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /*
+     * FORM TRANSAKSI
+     */
+
+    document
+        .getElementById("transactionForm")
+        .addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                const date =
+                    document.getElementById(
+                        "transactionDate"
+                    ).value;
+
+                const type =
+                    document.getElementById(
+                        "transactionType"
+                    ).value;
+
+                const description =
+                    document.getElementById(
+                        "transactionDescription"
+                    ).value
+                    .trim();
+
+                const amount =
+                    Number(
+                        document.getElementById(
+                            "transactionAmount"
+                        ).value
+                    );
+
+                const category =
+                    document.getElementById(
+                        "transactionCategory"
+                    ).value;
+
+
+                if (
+                    !date ||
+                    !description ||
+                    !Number.isFinite(amount) ||
+                    amount <= 0
+                ) {
+
+                    alert(
+                        "Data transaksi belum valid."
+                    );
+
+                    return;
+
+                }
+
+
+                const table =
+                    document.getElementById(
+                        "transactionTable"
+                    );
+
+
+                const row =
+                    document.createElement("tr");
+
+
+                const formattedAmount =
+                    new Intl.NumberFormat(
+                        "id-ID"
+                    ).format(amount);
+
+
+                const formattedDate =
+                    date
+                    .split("-")
+                    .reverse()
+                    .join("/");
+
+
+                /*
+                 * Menggunakan textContent,
+                 * bukan innerHTML untuk data pengguna.
+                 * Ini mengurangi risiko XSS pada prototype.
+                 */
+
+                const dateCell =
+                    document.createElement("td");
+
+                dateCell.textContent =
+                    formattedDate;
+
+
+                const descriptionCell =
+                    document.createElement("td");
+
+                descriptionCell.textContent =
+                    description;
+
+
+                const categoryCell =
+                    document.createElement("td");
+
+                categoryCell.textContent =
+                    category;
+
+
+                const typeCell =
+                    document.createElement("td");
+
+
+                const badge =
+                    document.createElement("span");
+
+                badge.classList.add(
+                    "badge",
+                    type === "income"
+                        ? "badge-income"
+                        : "badge-expense"
+                );
+
+                badge.textContent =
+                    type === "income"
+                        ? "Pemasukan"
+                        : "Pengeluaran";
+
+
+                typeCell.appendChild(badge);
+
+
+                const amountCell =
+                    document.createElement("td");
+
+                amountCell.classList.add(
+                    type === "income"
+                        ? "income"
+                        : "expense"
+                );
+
+                amountCell.textContent =
+                    (type === "income"
+                        ? "+ "
+                        : "- ") +
+                    "Rp " +
+                    formattedAmount;
+
+
+                row.appendChild(dateCell);
+                row.appendChild(descriptionCell);
+                row.appendChild(categoryCell);
+                row.appendChild(typeCell);
+                row.appendChild(amountCell);
+
+
+                table.prepend(row);
+
+
+                alert(
+                    "Transaksi berhasil ditambahkan ke tampilan."
+                );
+
+
+                document
+                    .getElementById(
+                        "transactionForm"
+                    )
+                    .reset();
+
+            }
+        );
+
+
+    /*
+     * TANGGAL DEFAULT
+     */
+
+    document
+        .getElementById(
+            "transactionDate"
+        )
+        .value =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+</script>
+
+</body>
+</html>
