@@ -32,10 +32,121 @@
         }
 
         /* =========================
+           LOGIN
+        ========================== */
+
+        #loginPage {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background:
+                radial-gradient(circle at top right, #dbeafe, transparent 35%),
+                linear-gradient(135deg, #eef4ff, #f8fafc);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, .12);
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            margin: auto auto 18px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1d4ed8;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .login-card h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .login-card .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #dbe1ea;
+            border-radius: 10px;
+            outline: none;
+            background: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .10);
+        }
+
+        .login-btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            background: #1d4ed8;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .login-btn:hover {
+            background: #1e40af;
+        }
+
+        .security-note {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* =========================
            APP
         ========================== */
 
         #app {
+            display: none;
             min-height: 100vh;
         }
 
@@ -99,6 +210,19 @@
             color: white;
         }
 
+        .logout-btn {
+            position: absolute;
+            bottom: 25px;
+            left: 16px;
+            width: calc(100% - 32px);
+            padding: 12px;
+            border: 1px solid #334155;
+            background: transparent;
+            color: #cbd5e1;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
         .main {
             margin-left: 245px;
             padding: 28px;
@@ -113,6 +237,13 @@
 
         .topbar h1 {
             font-size: 28px;
+        }
+
+        .user-info {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(15,23,42,.05);
         }
 
         /* =========================
@@ -201,6 +332,34 @@
 
         .add-btn:hover {
             background: #1d4ed8;
+        }
+
+        .action-btn {
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            color: #334155;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .edit-btn {
+            border-color: #2563eb;
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .delete-btn {
+            border-color: #dc2626;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-btn:hover {
+            filter: brightness(.95);
         }
 
         /* =========================
@@ -342,6 +501,12 @@
                 height: auto;
             }
 
+            .logout-btn {
+                position: static;
+                width: 100%;
+                margin-top: 10px;
+            }
+
             .main {
                 margin-left: 0;
                 padding: 18px;
@@ -365,6 +530,80 @@
 </head>
 
 <body>
+
+<!-- =====================================================
+      LOGIN PAGE
+  ====================================================== -->
+
+  <section id="loginPage">
+
+    <div class="login-card">
+
+      <div class="logo">
+        P
+      </div>
+
+      <h1>PUNDIKU</h1>
+
+      <p class="subtitle">
+        Akuntansi Keuangan Keluarga
+      </p>
+
+      <form id="loginForm">
+
+        <div class="form-group">
+          <label for="username">
+            Username
+          </label>
+
+          <input
+            type="text"
+            id="username"
+            autocomplete="username"
+            required
+            maxlength="50"
+            placeholder="Masukkan username">
+        </div>
+
+        <div class="form-group">
+          <label for="password">
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="password"
+            autocomplete="current-password"
+            required
+            maxlength="100"
+            placeholder="Masukkan password">
+        </div>
+
+        <button
+          type="submit"
+          class="login-btn">
+          MASUK
+        </button>
+
+        <div
+          id="loginError"
+          class="error">
+          Username atau password salah.
+        </div>
+
+      </form>
+
+      <div class="security-note">
+        🔒 Prototype frontend. Untuk produksi,
+        autentikasi harus menggunakan backend,
+        password hashing, HTTPS, secure session/cookie,
+        validasi server-side, dan database.
+      </div>
+
+    </div>
+
+  </section>
+
 
 <!-- =====================================================
       MAIN APPLICATION
@@ -404,6 +643,12 @@
 
         <button
             class="nav-btn"
+            data-page="dana-operasional">
+            💼 Dana Operasional
+        </button>
+
+        <button
+            class="nav-btn"
             data-page="aset">
             🏦 Aset
         </button>
@@ -418,6 +663,13 @@
             class="nav-btn"
             data-page="laporan">
             📊 Laporan
+        </button>
+
+
+        <button
+            id="logoutBtn"
+            class="logout-btn">
+            🚪 Keluar
         </button>
 
     </aside>
@@ -438,11 +690,15 @@
             <div class="topbar">
 
                 <div>
-                    <h1 style="font-weight:bold;color:blue;">DASBORDKU</h1>
+                    <h1>DASHBOARD</h1>
 
                     <p style="color:#64748b;margin-top:5px;">
                         Monitoring keuangan keluarga
                     </p>
+                </div>
+
+                <div class="user-info">
+                    👤 <span id="displayUser">Pengguna</span>
                 </div>
 
             </div>
@@ -928,9 +1184,104 @@
                         Daftar Aset
                     </h2>
 
-                    <button class="add-btn">
-                        + Tambah Aset
-                    </button>
+                    <button
+                        id="addAssetBtn"
+                        class="add-btn">
+                            + Tambah Aset
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ASSET FORM -->
+
+                <div
+                    id="assetFormContainer"
+                    style="display:none;max-width:700px;margin-top:20px;">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <h2 id="assetFormTitle">Tambah Aset</h2>
+                            <button
+                                id="closeAssetForm"
+                                style="border:none;background:transparent;cursor:pointer;font-size:18px;color:#64748b;">
+                                ✕
+                            </button>
+                        </div>
+
+                        <form id="assetForm">
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label>Nama Aset</label>
+                                    <input
+                                        type="text"
+                                        id="assetName"
+                                        maxlength="100"
+                                        required
+                                        placeholder="Contoh: Rumah">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Kategori</label>
+                                    <select id="assetCategory" required>
+                                        <option value="Properti">Properti</option>
+                                        <option value="Kendaraan">Kendaraan</option>
+                                        <option value="Kas">Kas</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label>Tahun</label>
+                                    <input
+                                        type="number"
+                                        id="assetYear"
+                                        min="1900"
+                                        max="2100"
+                                        required
+                                        placeholder="2020">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Nilai (Rp)</label>
+                                    <input
+                                        type="number"
+                                        id="assetValue"
+                                        min="1"
+                                        step="1"
+                                        required
+                                        placeholder="0">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select id="assetStatus" required>
+                                    <option value="Dimiliki">Dimiliki</option>
+                                    <option value="Aktif">Aktif</option>
+                                </select>
+                            </div>
+
+                            <button
+                                id="assetSubmitBtn"
+                                class="save-btn"
+                                type="submit">
+                                Simpan Aset
+                            </button>
+
+                        </form>
+
+                    </div>
 
                 </div>
 
@@ -947,35 +1298,12 @@
                                 <th>Tahun</th>
                                 <th>Nilai</th>
                                 <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
 
                         </thead>
 
-                        <tbody>
-
-                            <tr>
-                                <td>Rumah</td>
-                                <td>Properti</td>
-                                <td>2020</td>
-                                <td>Rp 100.000.000</td>
-                                <td>Dimiliki</td>
-                            </tr>
-
-                            <tr>
-                                <td>Kendaraan</td>
-                                <td>Kendaraan</td>
-                                <td>2023</td>
-                                <td>Rp 35.000.000</td>
-                                <td>Dimiliki</td>
-                            </tr>
-
-                            <tr>
-                                <td>Tabungan</td>
-                                <td>Kas</td>
-                                <td>2026</td>
-                                <td>Rp 15.000.000</td>
-                                <td>Aktif</td>
-                            </tr>
+                        <tbody id="assetTable">
 
                         </tbody>
 
@@ -1019,9 +1347,97 @@
                         Portofolio Investasi
                     </h2>
 
-                    <button class="add-btn">
-                        + Tambah Investasi
-                    </button>
+                    <button
+                        id="addInvestmentBtn"
+                        class="add-btn">
+                            + Tambah Investasi
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INVESTMENT FORM -->
+
+                <div
+                    id="investmentFormContainer"
+                    style="display:none;max-width:700px;margin-top:20px;">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <h2 id="investmentFormTitle">Tambah Investasi</h2>
+                            <button
+                                id="closeInvestmentForm"
+                                style="border:none;background:transparent;cursor:pointer;font-size:18px;color:#64748b;">
+                                ✕
+                            </button>
+                        </div>
+
+                        <form id="investmentForm">
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label>Instrumen</label>
+                                    <input
+                                        type="text"
+                                        id="investmentName"
+                                        maxlength="100"
+                                        required
+                                        placeholder="Contoh: Reksa Dana">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Jenis</label>
+                                    <select id="investmentType" required>
+                                        <option value="Reksa Dana">Reksa Dana</option>
+                                        <option value="Logam Mulia">Logam Mulia</option>
+                                        <option value="Deposito">Deposito</option>
+                                        <option value="Saham">Saham</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label>Modal (Rp)</label>
+                                    <input
+                                        type="number"
+                                        id="investmentCapital"
+                                        min="1"
+                                        step="1"
+                                        required
+                                        placeholder="0">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Persentase Keuntungan (% per tahun)</label>
+                                    <input
+                                        type="number"
+                                        id="investmentProfitPercent"
+                                        min="0"
+                                        step="0.1"
+                                        required
+                                        placeholder="Contoh: 10">
+                                </div>
+
+                            </div>
+
+                            <button
+                                id="investmentSubmitBtn"
+                                class="save-btn"
+                                type="submit">
+                                Simpan Investasi
+                            </button>
+
+                        </form>
+
+                    </div>
 
                 </div>
 
@@ -1038,41 +1454,12 @@
                                 <th>Modal</th>
                                 <th>Nilai Saat Ini</th>
                                 <th>Keuntungan</th>
+                                <th>Aksi</th>
                             </tr>
 
                         </thead>
 
-                        <tbody>
-
-                            <tr>
-                                <td>Reksa Dana</td>
-                                <td>Reksa Dana</td>
-                                <td>Rp 10.000.000</td>
-                                <td>Rp 11.000.000</td>
-                                <td class="income">
-                                    +10%
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>Emas</td>
-                                <td>Logam Mulia</td>
-                                <td>Rp 15.000.000</td>
-                                <td>Rp 16.500.000</td>
-                                <td class="income">
-                                    +10%
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>Deposito</td>
-                                <td>Deposito</td>
-                                <td>Rp 10.000.000</td>
-                                <td>Rp 10.300.000</td>
-                                <td class="income">
-                                    +3%
-                                </td>
-                            </tr>
+                        <tbody id="investmentTable">
 
                         </tbody>
 
@@ -1187,6 +1574,230 @@
 
         </section>
 
+
+        <section
+            id="dana-operasional"
+            class="page-section">
+
+            <div class="topbar">
+
+                <div>
+                    <h1>Dana Operasional</h1>
+                    <p style="color:#64748b;">
+                        Monitoring dana untuk kebutuhan operasional
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="summary-grid">
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Saldo Dana
+                    </div>
+
+                    <div
+                        id="fundBalance"
+                        class="value">
+                        Rp 25.000.000
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Dana Digunakan
+                    </div>
+
+                    <div
+                        id="fundUsed"
+                        class="value expense">
+                        Rp 8.000.000
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Sisa Dana
+                    </div>
+
+                    <div
+                        id="fundRemaining"
+                        class="value income">
+                        Rp 17.000.000
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="label">
+                        Kebutuhan Bulan Ini
+                    </div>
+
+                    <div class="value">
+                        Rp 5.000.000
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>Riwayat Dana Operasional</h2>
+                    <button
+                        id="addFundBtn"
+                        class="add-btn">
+                        + Tambah Dana
+                    </button>
+                </div>
+
+                <div
+                    id="fundFormContainer"
+                    style="display:none;max-width:700px;margin-top:20px;">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <h2 id="fundFormTitle">Tambah Dana</h2>
+                            <button
+                                id="closeFundForm"
+                                style="border:none;background:transparent;cursor:pointer;font-size:18px;color:#64748b;">
+                                ✕
+                            </button>
+                        </div>
+
+                        <form id="fundForm">
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label>Tanggal</label>
+                                    <input
+                                        type="date"
+                                        id="fundDate"
+                                        required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Keperluan</label>
+                                    <input
+                                        type="text"
+                                        id="fundPurpose"
+                                        maxlength="100"
+                                        required
+                                        placeholder="Contoh: Transportasi kegiatan">
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label>Jenis Dana</label>
+                                    <select
+                                        id="fundType"
+                                        required>
+                                        <option value="income">Pemasukan</option>
+                                        <option value="expense">Pengeluaran</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Kategori</label>
+                                    <select
+                                        id="fundCategory"
+                                        required>
+                                        <option>Transportasi</option>
+                                        <option>Konsumsi</option>
+                                        <option>Perlengkapan</option>
+                                        <option>Administrasi</option>
+                                        <option>Lainnya</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label>Nominal (Rp)</label>
+                                    <input
+                                        type="number"
+                                        id="fundAmount"
+                                        min="1"
+                                        step="1"
+                                        required
+                                        placeholder="0">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select
+                                        id="fundStatus"
+                                        required>
+                                        <option>Disetujui</option>
+                                        <option>Dalam Proses</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <button
+                                id="fundSubmitBtn"
+                                class="save-btn"
+                                type="submit">
+                                Simpan Dana
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Keperluan</th>
+                                <th>Jenis</th>
+                                <th>Kategori</th>
+                                <th>Nominal</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="fundTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
     </main>
 
 </section>
@@ -1202,8 +1813,10 @@
      *
      * CATATAN KEAMANAN:
      *
-     * Jangan menggunakan data sensitif langsung di
-     * JavaScript untuk aplikasi produksi.
+     * Login di bawah hanya DEMO frontend.
+     *
+     * Jangan menggunakan username/password yang ditulis
+     * langsung di JavaScript untuk aplikasi produksi.
      *
      * Produksi:
      *
@@ -1224,8 +1837,99 @@
      * Secure + HttpOnly + SameSite Cookie
      */
 
+    const loginPage =
+        document.getElementById("loginPage");
+
     const app =
         document.getElementById("app");
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const loginError =
+        document.getElementById("loginError");
+
+    const displayUser =
+        document.getElementById("displayUser");
+
+
+    /*
+     * DEMO LOGIN
+     *
+     * Untuk prototype:
+     *
+     * username: rezha
+     * password: dira&cila
+     *
+     * Jangan gunakan kredensial ini
+     * pada aplikasi produksi.
+     */
+
+    const DEMO_USERNAME = "rezha";
+    const DEMO_PASSWORD = "dira&cila";
+
+
+    loginForm.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+            const username =
+                document.getElementById("username")
+                .value
+                .trim();
+
+            const password =
+                document.getElementById("password")
+                .value;
+
+
+            if (
+                username === DEMO_USERNAME &&
+                password === DEMO_PASSWORD
+            ) {
+
+                loginPage.style.display = "none";
+
+                app.style.display = "block";
+
+                displayUser.textContent =
+                    username;
+
+                loginError.style.display =
+                    "none";
+
+            } else {
+
+                loginError.style.display =
+                    "block";
+
+            }
+
+        }
+    );
+
+
+    /*
+     * LOGOUT
+     */
+
+    document
+        .getElementById("logoutBtn")
+        .addEventListener(
+            "click",
+            function() {
+
+                app.style.display = "none";
+
+                loginPage.style.display =
+                    "flex";
+
+                loginForm.reset();
+
+            }
+        );
 
 
     /*
@@ -1486,7 +2190,7 @@
      * TANGGAL DEFAULT
      */
 
-    document
+document
         .getElementById(
             "transactionDate"
         )
@@ -1495,7 +2199,1153 @@
             .toISOString()
             .split("T")[0];
 
-</script>
+
+    /*
+     * INVESTASI - LOCAL STORAGE
+     */
+
+    function getInvestments() {
+
+        const data =
+            localStorage.getItem("pundikuInvestments");
+
+        if (data) {
+
+            return JSON.parse(data);
+
+        }
+
+        const seed = [
+            {
+                id: 1,
+                name: "Reksa Dana",
+                type: "Reksa Dana",
+                capital: 10000000,
+                profitPercent: 10
+            },
+            {
+                id: 2,
+                name: "Emas",
+                type: "Logam Mulia",
+                capital: 15000000,
+                profitPercent: 10
+            },
+            {
+                id: 3,
+                name: "Deposito",
+                type: "Deposito",
+                capital: 10000000,
+                profitPercent: 3
+            }
+        ];
+
+        localStorage.setItem(
+            "pundikuInvestments",
+            JSON.stringify(seed)
+        );
+
+        return seed;
+
+    }
+
+
+    function saveInvestments(investments) {
+
+        localStorage.setItem(
+            "pundikuInvestments",
+            JSON.stringify(investments)
+        );
+
+    }
+
+
+    let editingInvestmentId = null;
+
+
+    function formatRupiah(amount) {
+
+        return "Rp " +
+            new Intl.NumberFormat("id-ID")
+                .format(amount);
+
+    }
+
+
+    function renderInvestments() {
+
+        const investments = getInvestments();
+
+        const table =
+            document.getElementById("investmentTable");
+
+        table.innerHTML = "";
+
+        investments.forEach(function(item) {
+
+            const currentValue =
+                item.capital * (1 + item.profitPercent / 100);
+
+            const monthlyProfit =
+                item.capital * item.profitPercent / 100;
+
+            const profitText =
+                "+ " + formatRupiah(monthlyProfit) +
+                " /bulan";
+
+            const row = document.createElement("tr");
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = item.name;
+
+            const typeCell = document.createElement("td");
+            typeCell.textContent = item.type;
+
+            const capitalCell = document.createElement("td");
+            capitalCell.textContent = formatRupiah(item.capital);
+
+            const valueCell = document.createElement("td");
+            valueCell.textContent = formatRupiah(currentValue);
+
+            const profitCell = document.createElement("td");
+            profitCell.classList.add("income");
+            profitCell.textContent = profitText;
+
+            const actionCell = document.createElement("td");
+            const editBtn = document.createElement("button");
+            editBtn.classList.add("action-btn", "edit-btn");
+            editBtn.textContent = "Edit";
+            editBtn.addEventListener("click", function() {
+                editInvestment(item.id);
+            });
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.classList.add("action-btn", "delete-btn");
+            deleteBtn.textContent = "Hapus";
+            deleteBtn.addEventListener("click", function() {
+                if (confirm("Hapus " + item.name + "?")) {
+                    deleteInvestment(item.id);
+                }
+            });
+
+            actionCell.appendChild(editBtn);
+            actionCell.appendChild(deleteBtn);
+
+            row.appendChild(nameCell);
+            row.appendChild(typeCell);
+            row.appendChild(capitalCell);
+            row.appendChild(valueCell);
+            row.appendChild(profitCell);
+            row.appendChild(actionCell);
+
+            table.appendChild(row);
+
+        });
+
+    }
+
+
+    function deleteInvestment(id) {
+
+        const investments = getInvestments().filter(function(i) {
+            return i.id !== id;
+        });
+
+        saveInvestments(investments);
+        renderInvestments();
+
+    }
+
+
+    function editInvestment(id) {
+
+        const investment = getInvestments().find(function(item) {
+            return item.id === id;
+        });
+
+        if (!investment) {
+
+            alert("Data investasi tidak ditemukan.");
+            return;
+
+        }
+
+        editingInvestmentId = id;
+
+        document.getElementById("investmentName")
+            .value = investment.name || "";
+
+        document.getElementById("investmentType")
+            .value = investment.type || "Lainnya";
+
+        document.getElementById("investmentCapital")
+            .value = investment.capital || "";
+
+        document.getElementById("investmentProfitPercent")
+            .value = investment.profitPercent || "";
+
+        document.getElementById("investmentFormTitle")
+            .textContent = "Edit Investasi";
+
+        document.getElementById("investmentSubmitBtn")
+            .textContent = "Perbarui Investasi";
+
+        document.getElementById("investmentFormContainer")
+            .style.display = "block";
+
+    }
+
+
+    document
+        .getElementById("addInvestmentBtn")
+        .addEventListener("click", function() {
+
+            editingInvestmentId = null;
+
+            document.getElementById("investmentForm")
+                .reset();
+
+            document.getElementById("investmentFormTitle")
+                .textContent = "Tambah Investasi";
+
+            document.getElementById("investmentSubmitBtn")
+                .textContent = "Simpan Investasi";
+
+            document.getElementById("investmentFormContainer")
+                .style.display = "block";
+
+        });
+
+    document
+        .getElementById("closeInvestmentForm")
+        .addEventListener("click", function() {
+
+            editingInvestmentId = null;
+
+            document.getElementById("investmentForm")
+                .reset();
+
+            document.getElementById("investmentFormTitle")
+                .textContent = "Tambah Investasi";
+
+            document.getElementById("investmentSubmitBtn")
+                .textContent = "Simpan Investasi";
+
+            document.getElementById("investmentFormContainer")
+                .style.display = "none";
+
+        });
+
+    document
+        .getElementById("investmentForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const name =
+                document.getElementById(
+                    "investmentName"
+                ).value.trim();
+
+            const type =
+                document.getElementById(
+                    "investmentType"
+                ).value;
+
+            const capital = Number(
+                document.getElementById(
+                    "investmentCapital"
+                ).value
+            );
+
+            const profitPercent = Number(
+                document.getElementById(
+                    "investmentProfitPercent"
+                ).value
+            );
+
+            if (
+                !name ||
+                !Number.isFinite(capital) ||
+                capital <= 0 ||
+                !Number.isFinite(profitPercent) ||
+                profitPercent < 0
+            ) {
+
+                alert("Data investasi belum valid.");
+                return;
+
+            }
+
+            const investments = getInvestments();
+
+            if (editingInvestmentId) {
+
+                const index = investments.findIndex(function(item) {
+                    return item.id === editingInvestmentId;
+                });
+
+                if (index === -1) {
+
+                    alert("Data investasi tidak ditemukan.");
+                    return;
+
+                }
+
+                investments[index] = {
+                    id: editingInvestmentId,
+                    name: name,
+                    type: type,
+                    capital: capital,
+                    profitPercent: profitPercent
+                };
+
+                alert("Investasi berhasil diperbarui.");
+
+            } else {
+
+                investments.push({
+                    id: Date.now(),
+                    name: name,
+                    type: type,
+                    capital: capital,
+                    profitPercent: profitPercent
+                });
+
+                alert("Investasi berhasil ditambahkan.");
+
+            }
+
+            saveInvestments(investments);
+            renderInvestments();
+
+            document.getElementById(
+                "investmentForm"
+            ).reset();
+
+            document.getElementById(
+                "investmentFormContainer"
+            ).style.display = "none";
+
+            editingInvestmentId = null;
+
+            document.getElementById("investmentFormTitle")
+                .textContent = "Tambah Investasi";
+
+            document.getElementById("investmentSubmitBtn")
+                .textContent = "Simpan Investasi";
+
+        });
+
+    renderInvestments();
+
+
+    const FUND_STORAGE_KEY = "pundikuOperationalFunds";
+    const INITIAL_FUND_BALANCE = 25000000;
+    const INITIAL_FUND_USED = 4000000;
+    let editingFundId = null;
+
+
+    function getOperationalFunds() {
+
+        const data =
+            localStorage.getItem(FUND_STORAGE_KEY);
+
+        if (data) {
+
+            try {
+
+                const funds = JSON.parse(data);
+
+                if (Array.isArray(funds)) {
+
+                    return funds;
+
+                }
+
+            } catch {}
+
+            localStorage.removeItem(FUND_STORAGE_KEY);
+
+        }
+
+        const seed = [
+            {
+                id: 1,
+                date: "2026-09-17",
+                purpose: "Transportasi kegiatan",
+                type: "expense",
+                category: "Transportasi",
+                amount: 750000,
+                status: "Disetujui"
+            },
+            {
+                id: 2,
+                date: "2026-09-15",
+                purpose: "Konsumsi rapat",
+                type: "expense",
+                category: "Konsumsi",
+                amount: 1250000,
+                status: "Disetujui"
+            },
+            {
+                id: 3,
+                date: "2026-09-12",
+                purpose: "Perlengkapan operasional",
+                type: "expense",
+                category: "Perlengkapan",
+                amount: 2000000,
+                status: "Disetujui"
+            }
+        ];
+
+        saveOperationalFunds(seed);
+
+        return seed;
+
+    }
+
+
+    function saveOperationalFunds(funds) {
+
+        localStorage.setItem(
+            FUND_STORAGE_KEY,
+            JSON.stringify(funds)
+        );
+
+    }
+
+
+    function formatFundDate(dateValue) {
+
+        if (!dateValue) {
+
+            return "-";
+
+        }
+
+        const parts =
+            dateValue.split("-");
+
+        if (parts.length !== 3) {
+
+            return dateValue;
+
+        }
+
+        return parts[2] + "/" +
+            parts[1] + "/" +
+            parts[0];
+
+    }
+
+
+    function updateFundSummary() {
+
+        const funds = getOperationalFunds();
+        let totalIncome = 0;
+        let totalExpense = 0;
+
+        funds.forEach(function(item) {
+
+            const amount = Number(item.amount);
+
+            if (
+                !Number.isFinite(amount) ||
+                amount <= 0
+            ) {
+
+                return;
+
+            }
+
+            if (item.type === "income") {
+
+                totalIncome += amount;
+
+            } else {
+
+                totalExpense += amount;
+
+            }
+
+        });
+
+        const totalUsed =
+            INITIAL_FUND_USED + totalExpense;
+
+        const remaining =
+            INITIAL_FUND_BALANCE +
+            totalIncome -
+            totalUsed;
+
+        document.getElementById("fundBalance")
+            .textContent = formatRupiah(
+                INITIAL_FUND_BALANCE + totalIncome
+            );
+
+        document.getElementById("fundUsed")
+            .textContent = formatRupiah(totalUsed);
+
+        document.getElementById("fundRemaining")
+            .textContent = formatRupiah(remaining);
+
+    }
+
+
+    function renderOperationalFunds() {
+
+        const funds = getOperationalFunds();
+        const table =
+            document.getElementById("fundTable");
+
+        table.innerHTML = "";
+
+        if (funds.length === 0) {
+
+            const row = document.createElement("tr");
+            const emptyCell = document.createElement("td");
+
+            emptyCell.colSpan = 7;
+            emptyCell.textContent =
+                "Belum ada data dana operasional.";
+            emptyCell.style.textAlign = "center";
+            emptyCell.style.color = "#64748b";
+            emptyCell.style.padding = "20px 10px";
+
+            row.appendChild(emptyCell);
+            table.appendChild(row);
+            updateFundSummary();
+
+            return;
+
+        }
+
+        funds.forEach(function(item) {
+
+            const row = document.createElement("tr");
+
+            const dateCell = document.createElement("td");
+            dateCell.textContent = formatFundDate(item.date);
+
+            const purposeCell = document.createElement("td");
+            purposeCell.textContent = item.purpose || "-";
+
+            const typeCell = document.createElement("td");
+            typeCell.textContent = item.type === "income"
+                ? "Pemasukan"
+                : "Pengeluaran";
+
+            const categoryCell = document.createElement("td");
+            categoryCell.textContent = item.category || "-";
+
+            const amount = Number(item.amount) || 0;
+            const amountCell = document.createElement("td");
+            amountCell.classList.add(
+                item.type === "income"
+                    ? "income"
+                    : "expense"
+            );
+            amountCell.textContent =
+                (item.type === "income" ? "+ " : "- ") +
+                formatRupiah(amount);
+
+            const statusCell = document.createElement("td");
+            const badge = document.createElement("span");
+            badge.classList.add(
+                "badge",
+                item.status === "Disetujui"
+                    ? "badge-income"
+                    : "badge-expense"
+            );
+            badge.textContent = item.status || "-";
+            statusCell.appendChild(badge);
+
+            const actionCell = document.createElement("td");
+            const editBtn = document.createElement("button");
+            editBtn.classList.add("action-btn", "edit-btn");
+            editBtn.textContent = "Edit";
+            editBtn.addEventListener("click", function() {
+                editOperationalFund(item.id);
+            });
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.classList.add("action-btn", "delete-btn");
+            deleteBtn.textContent = "Hapus";
+            deleteBtn.addEventListener("click", function() {
+                if (confirm("Hapus dana untuk " + item.purpose + "?")) {
+                    deleteOperationalFund(item.id);
+                }
+            });
+
+            actionCell.appendChild(editBtn);
+            actionCell.appendChild(deleteBtn);
+
+            row.appendChild(dateCell);
+            row.appendChild(purposeCell);
+            row.appendChild(typeCell);
+            row.appendChild(categoryCell);
+            row.appendChild(amountCell);
+            row.appendChild(statusCell);
+            row.appendChild(actionCell);
+
+            table.appendChild(row);
+
+        });
+
+        updateFundSummary();
+
+    }
+
+
+    function editOperationalFund(id) {
+
+        const fund = getOperationalFunds().find(function(item) {
+            return item.id === id;
+        });
+
+        if (!fund) {
+
+            alert("Data dana tidak ditemukan.");
+            return;
+
+        }
+
+        editingFundId = id;
+
+        document.getElementById("fundDate")
+            .value = fund.date || "";
+
+        document.getElementById("fundPurpose")
+            .value = fund.purpose || "";
+
+        document.getElementById("fundType")
+            .value = fund.type || "expense";
+
+        document.getElementById("fundCategory")
+            .value = fund.category || "Lainnya";
+
+        document.getElementById("fundAmount")
+            .value = fund.amount || "";
+
+        document.getElementById("fundStatus")
+            .value = fund.status || "Disetujui";
+
+        document.getElementById("fundFormTitle")
+            .textContent = "Edit Dana";
+
+        document.getElementById("fundSubmitBtn")
+            .textContent = "Perbarui Dana";
+
+        document.getElementById("fundFormContainer")
+            .style.display = "block";
+
+    }
+
+
+    function deleteOperationalFund(id) {
+
+        const funds = getOperationalFunds().filter(function(item) {
+            return item.id !== id;
+        });
+
+        saveOperationalFunds(funds);
+        renderOperationalFunds();
+
+    }
+
+
+    document
+        .getElementById("addFundBtn")
+        .addEventListener("click", function() {
+
+            editingFundId = null;
+
+            document.getElementById("fundForm")
+                .reset();
+
+            document.getElementById("fundDate")
+                .value = new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+            document.getElementById("fundFormTitle")
+                .textContent = "Tambah Dana";
+
+            document.getElementById("fundSubmitBtn")
+                .textContent = "Simpan Dana";
+
+            document.getElementById("fundFormContainer")
+                .style.display = "block";
+
+        });
+
+
+    document
+        .getElementById("closeFundForm")
+        .addEventListener("click", function() {
+
+            editingFundId = null;
+
+            document.getElementById("fundForm")
+                .reset();
+
+            document.getElementById("fundFormTitle")
+                .textContent = "Tambah Dana";
+
+            document.getElementById("fundSubmitBtn")
+                .textContent = "Simpan Dana";
+
+            document.getElementById("fundFormContainer")
+                .style.display = "none";
+
+        });
+
+
+    document
+        .getElementById("fundForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const date =
+                document.getElementById("fundDate")
+                    .value;
+
+            const purpose =
+                document.getElementById("fundPurpose")
+                    .value
+                    .trim();
+
+            const type =
+                document.getElementById("fundType")
+                    .value;
+
+            const category =
+                document.getElementById("fundCategory")
+                    .value;
+
+            const amount = Number(
+                document.getElementById("fundAmount")
+                    .value
+            );
+
+            const status =
+                document.getElementById("fundStatus")
+                    .value;
+
+            if (
+                !date ||
+                !purpose ||
+                (type !== "income" && type !== "expense") ||
+                !category ||
+                !Number.isFinite(amount) ||
+                amount <= 0 ||
+                !status
+            ) {
+
+                alert("Data dana belum valid.");
+                return;
+
+            }
+
+            const funds = getOperationalFunds();
+            const fundData = {
+                date: date,
+                purpose: purpose,
+                type: type,
+                category: category,
+                amount: amount,
+                status: status
+            };
+
+            if (editingFundId) {
+
+                const index = funds.findIndex(function(item) {
+                    return item.id === editingFundId;
+                });
+
+                if (index === -1) {
+
+                    alert("Data dana tidak ditemukan.");
+                    return;
+
+                }
+
+                funds[index] = {
+                    id: editingFundId,
+                    ...fundData
+                };
+
+                alert("Dana berhasil diperbarui.");
+
+            } else {
+
+                funds.push({
+                    id: Date.now(),
+                    ...fundData
+                });
+
+                alert("Dana berhasil ditambahkan.");
+
+            }
+
+            saveOperationalFunds(funds);
+            renderOperationalFunds();
+
+            document.getElementById("fundForm")
+                .reset();
+
+            document.getElementById("fundFormContainer")
+                .style.display = "none";
+
+            editingFundId = null;
+
+            document.getElementById("fundFormTitle")
+                .textContent = "Tambah Dana";
+
+            document.getElementById("fundSubmitBtn")
+                .textContent = "Simpan Dana";
+
+        });
+
+
+    renderOperationalFunds();
+
+
+    /*
+     * ASET - LOCAL STORAGE
+     */
+
+    function getAssets() {
+
+        const data =
+            localStorage.getItem("pundikuAssets");
+
+        if (data) {
+
+            return JSON.parse(data);
+
+        }
+
+        const seed = [
+            {
+                id: 1,
+                name: "Rumah",
+                category: "Properti",
+                year: 2020,
+                value: 100000000,
+                status: "Dimiliki"
+            },
+            {
+                id: 2,
+                name: "Kendaraan",
+                category: "Kendaraan",
+                year: 2023,
+                value: 35000000,
+                status: "Dimiliki"
+            },
+            {
+                id: 3,
+                name: "Tabungan",
+                category: "Kas",
+                year: 2026,
+                value: 15000000,
+                status: "Aktif"
+            }
+        ];
+
+        localStorage.setItem(
+            "pundikuAssets",
+            JSON.stringify(seed)
+        );
+
+        return seed;
+
+    }
+
+
+    function saveAssets(assets) {
+
+        localStorage.setItem(
+            "pundikuAssets",
+            JSON.stringify(assets)
+        );
+
+    }
+
+
+    let editingAssetId = null;
+
+
+    function renderAssets() {
+
+        const assets = getAssets();
+
+        const table =
+            document.getElementById("assetTable");
+
+        table.innerHTML = "";
+
+        assets.forEach(function(item) {
+
+            const row = document.createElement("tr");
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = item.name;
+
+            const categoryCell = document.createElement("td");
+            categoryCell.textContent = item.category;
+
+            const yearCell = document.createElement("td");
+            yearCell.textContent = item.year;
+
+            const valueCell = document.createElement("td");
+            valueCell.textContent = formatRupiah(item.value);
+
+            const statusCell = document.createElement("td");
+            statusCell.textContent = item.status;
+
+            const actionCell = document.createElement("td");
+            const editBtn = document.createElement("button");
+            editBtn.classList.add("action-btn", "edit-btn");
+            editBtn.textContent = "Edit";
+            editBtn.addEventListener("click", function() {
+                editAsset(item.id);
+            });
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.classList.add("action-btn", "delete-btn");
+            deleteBtn.textContent = "Hapus";
+            deleteBtn.addEventListener("click", function() {
+                if (confirm("Hapus " + item.name + "?")) {
+                    deleteAsset(item.id);
+                }
+            });
+
+            actionCell.appendChild(editBtn);
+            actionCell.appendChild(deleteBtn);
+
+            row.appendChild(nameCell);
+            row.appendChild(categoryCell);
+            row.appendChild(yearCell);
+            row.appendChild(valueCell);
+            row.appendChild(statusCell);
+            row.appendChild(actionCell);
+
+            table.appendChild(row);
+
+        });
+
+    }
+
+
+    function deleteAsset(id) {
+
+        const assets = getAssets().filter(function(a) {
+            return a.id !== id;
+        });
+
+        saveAssets(assets);
+        renderAssets();
+
+    }
+
+
+    function editAsset(id) {
+
+        const asset = getAssets().find(function(item) {
+            return item.id === id;
+        });
+
+        if (!asset) {
+
+            alert("Data aset tidak ditemukan.");
+            return;
+
+        }
+
+        editingAssetId = id;
+
+        document.getElementById("assetName")
+            .value = asset.name || "";
+
+        document.getElementById("assetCategory")
+            .value = asset.category || "Lainnya";
+
+        document.getElementById("assetYear")
+            .value = asset.year || "";
+
+        document.getElementById("assetValue")
+            .value = asset.value || "";
+
+        document.getElementById("assetStatus")
+            .value = asset.status || "Dimiliki";
+
+        document.getElementById("assetFormTitle")
+            .textContent = "Edit Aset";
+
+        document.getElementById("assetSubmitBtn")
+            .textContent = "Perbarui Aset";
+
+        document.getElementById("assetFormContainer")
+            .style.display = "block";
+
+    }
+
+
+    document
+        .getElementById("addAssetBtn")
+        .addEventListener("click", function() {
+
+            editingAssetId = null;
+
+            document.getElementById("assetForm")
+                .reset();
+
+            document.getElementById("assetFormTitle")
+                .textContent = "Tambah Aset";
+
+            document.getElementById("assetSubmitBtn")
+                .textContent = "Simpan Aset";
+
+            document.getElementById("assetFormContainer")
+                .style.display = "block";
+
+        });
+
+    document
+        .getElementById("closeAssetForm")
+        .addEventListener("click", function() {
+
+            editingAssetId = null;
+
+            document.getElementById("assetForm")
+                .reset();
+
+            document.getElementById("assetFormTitle")
+                .textContent = "Tambah Aset";
+
+            document.getElementById("assetSubmitBtn")
+                .textContent = "Simpan Aset";
+
+            document.getElementById("assetFormContainer")
+                .style.display = "none";
+
+        });
+
+    document
+        .getElementById("assetForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const name =
+                document.getElementById(
+                    "assetName"
+                ).value.trim();
+
+            const category =
+                document.getElementById(
+                    "assetCategory"
+                ).value;
+
+            const year = Number(
+                document.getElementById(
+                    "assetYear"
+                ).value
+            );
+
+            const value = Number(
+                document.getElementById(
+                    "assetValue"
+                ).value
+            );
+
+            const status =
+                document.getElementById(
+                    "assetStatus"
+                ).value;
+
+            if (
+                !name ||
+                !Number.isFinite(year) ||
+                year < 1900 ||
+                year > 2100 ||
+                !Number.isFinite(value) ||
+                value <= 0 ||
+                !status
+            ) {
+
+                alert("Data aset belum valid.");
+                return;
+
+            }
+
+            const assets = getAssets();
+
+            if (editingAssetId) {
+
+                const index = assets.findIndex(function(item) {
+                    return item.id === editingAssetId;
+                });
+
+                if (index === -1) {
+
+                    alert("Data aset tidak ditemukan.");
+                    return;
+
+                }
+
+                assets[index] = {
+                    id: editingAssetId,
+                    name: name,
+                    category: category,
+                    year: year,
+                    value: value,
+                    status: status
+                };
+
+                alert("Aset berhasil diperbarui.");
+
+            } else {
+
+                assets.push({
+                    id: Date.now(),
+                    name: name,
+                    category: category,
+                    year: year,
+                    value: value,
+                    status: status
+                });
+
+                alert("Aset berhasil ditambahkan.");
+
+            }
+
+            saveAssets(assets);
+            renderAssets();
+
+            document.getElementById(
+                "assetForm"
+            ).reset();
+
+            document.getElementById(
+                "assetFormContainer"
+            ).style.display = "none";
+
+            editingAssetId = null;
+
+            document.getElementById("assetFormTitle")
+                .textContent = "Tambah Aset";
+
+            document.getElementById("assetSubmitBtn")
+                .textContent = "Simpan Aset";
+
+        });
+
+    renderAssets();
+
+    </script>
 
 </body>
 </html>
